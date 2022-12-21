@@ -1,0 +1,44 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend social media post",
+  "main": "index.js",
+  "prisma": {
+    "schema": "./src/prisma/schema.prisma"
+  },
+  "scripts": {
+    "dev": "nodemon ./src/index.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --fix .",
+    "prettier": "prettier --write ."
+  },
+  "keywords": [
+    "rest-api",
+    "backend",
+    "javascript",
+    "expressjs"
+  ],
+  "author": "ilham",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.30.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jest": "^29.3.1",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.1",
+    "prisma": "^4.7.1",
+    "supertest": "^6.3.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.7.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
+  }
+}
