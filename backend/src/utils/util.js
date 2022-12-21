@@ -12,6 +12,13 @@ const isEmpty = (value) => {
   }
 };
 
+const exclude = (key, obj) => {
+  // eslint-disable-next-line no-unused-vars
+  const { [key]: omitted, ...rest } = obj;
+  return rest;
+};
+
 module.exports = {
   isEmpty: isEmpty,
+  exclude: exclude,
 };

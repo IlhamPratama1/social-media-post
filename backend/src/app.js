@@ -5,18 +5,21 @@ const cors = require("cors");
 const morgan = require("morgan");
 const path = require("path");
 const prisma = require("./lib/prisma");
+const ErrorHandler = require("./exception/ErrorHandler");
 
 // Config
 const { PORT, ORIGIN, CREDENTIALS } = require("./config/index");
 
 // Route
 const HomeRoute = require("./routes/index.routes");
+const AuthRoute = require("./routes/auth.routes");
+const UserRoute = require("./routes/user.routes");
 
 class App {
   constructor() {
     this.app = express();
     this.port = PORT || 3000;
-    this.routes = [new HomeRoute()];
+    this.routes = [new HomeRoute(), new AuthRoute(), new UserRoute()];
 
     this.initializeMiddlewares();
     this.initializeRoutes();
@@ -39,6 +42,7 @@ class App {
     this.routes.forEach((route) => {
       this.app.use("/", route.router);
     });
+    this.app.use(ErrorHandler);
   }
 
   initializeMiddlewares() {
