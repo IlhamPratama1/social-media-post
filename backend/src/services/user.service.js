@@ -1,6 +1,6 @@
 const { compare, hash } = require("bcrypt");
 const prisma = require("../lib/prisma");
-const { exclude } = require("../utils/util");
+const { excludeAll } = require("../utils/util");
 const HttpException = require("../exception/HttpException");
 const { validateUpdateUser, validateChangePassword } = require("../dtos/user.dto");
 
@@ -12,7 +12,7 @@ class UserService {
   async getUserById(userId) {
     const findUser = await this.users.findUnique({ where: { id: userId } });
     if (!findUser) throw new HttpException(400, "Data not found");
-    const user = exclude("password", findUser);
+    const user = excludeAll(["id", "password"], findUser);
     return user;
   }
 
@@ -24,7 +24,7 @@ class UserService {
     if (!findUser) throw new HttpException(400, "Data not found");
 
     const updateUserData = await this.users.update({ where: { id: userId }, data: { ...userData } });
-    const user = exclude("password", updateUserData);
+    const user = excludeAll(["id", "password"], updateUserData);
     return user;
   }
 

@@ -14,12 +14,13 @@ const { PORT, ORIGIN, CREDENTIALS } = require("./config/index");
 const HomeRoute = require("./routes/index.routes");
 const AuthRoute = require("./routes/auth.routes");
 const UserRoute = require("./routes/user.routes");
+const PostRoute = require("./routes/post.routes");
 
 class App {
   constructor() {
     this.app = express();
     this.port = PORT || 3000;
-    this.routes = [new HomeRoute(), new AuthRoute(), new UserRoute()];
+    this.routes = [new HomeRoute(), new AuthRoute(), new UserRoute(), new PostRoute()];
 
     this.initializeMiddlewares();
     this.initializeRoutes();
