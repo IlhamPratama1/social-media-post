@@ -7,10 +7,10 @@ require("ajv-errors")(ajv);
 const updateUserDto = {
   type: "object",
   properties: {
-    name: { type: "string" },
-    username: { type: "string" },
-    email: { type: "string", format: "email" },
-    photo: { type: "string" },
+    name: { type: "string", minLength: 1 },
+    username: { type: "string", minLength: 1 },
+    email: { type: "string", format: "email", minLength: 1 },
+    photo: { type: "string", minLength: 1 },
   },
   required: ["name", "username", "email", "photo"],
   additionalProperties: false,
@@ -20,6 +20,9 @@ const updateUserDto = {
     additionalProperties: "Invalid data",
     properties: {
       email: "You have entered invalid email address",
+      name: "Invalid data",
+      username: "Invalid data",
+      photo: "Invalid data",
     },
   },
 };
@@ -27,12 +30,19 @@ const updateUserDto = {
 const changePasswordDto = {
   type: "object",
   properties: {
-    oldPassword: { type: "string" },
-    newPassword: { type: "string" },
-    confirmNewPassword: { type: "string" },
+    oldPassword: { type: "string", minLength: 1 },
+    newPassword: { type: "string", minLength: 1 },
+    confirmNewPassword: { type: "string", minLength: 1 },
   },
   required: ["oldPassword", "newPassword", "confirmNewPassword"],
   additionalProperties: false,
+  errorMessage: {
+    properties: {
+      oldPassword: "Invalid data",
+      newPassword: "Invalid data",
+      confirmNewPassword: "Invalid data",
+    },
+  },
 };
 
 const validateUpdateUser = ajv.compile(updateUserDto);

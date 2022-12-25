@@ -7,9 +7,9 @@ require("ajv-errors")(ajv);
 const createPostDto = {
   type: "object",
   properties: {
-    image: { type: "string" },
-    caption: { type: "string" },
-    tags: { type: "string" },
+    image: { type: "string", minLength: 1 },
+    caption: { type: "string", minLength: 1 },
+    tags: { type: "string", minLength: 1 },
   },
   required: ["image", "caption", "tags"],
   additionalProperties: false,
@@ -17,6 +17,11 @@ const createPostDto = {
     type: "should be an object",
     required: "Invalid data",
     additionalProperties: "Invalid data",
+    properties: {
+      image: "Invalid data",
+      caption: "Invalid data",
+      tags: "Invalid data",
+    },
   },
 };
 const validateCreatePost = ajv.compile(createPostDto);

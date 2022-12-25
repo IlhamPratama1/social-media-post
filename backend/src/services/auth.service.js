@@ -37,10 +37,10 @@ class AuthService {
     if (!valid) throw new HttpException(400, validateLoginDto.errors[0].message);
 
     const findUser = await this.users.findUnique({ where: { username: userData.username } });
-    if (!findUser) throw new HttpException(401, "Username not found");
+    if (!findUser) throw new HttpException(400, "Username not found");
 
     const isPasswordMatching = await compare(userData.password, findUser.password);
-    if (!isPasswordMatching) throw new HttpException(401, "Invalid password");
+    if (!isPasswordMatching) throw new HttpException(400, "Invalid password");
 
     return this.createToken(findUser);
   }

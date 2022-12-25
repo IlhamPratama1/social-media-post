@@ -7,10 +7,10 @@ require("ajv-errors")(ajv);
 const registerUserDto = {
   type: "object",
   properties: {
-    name: { type: "string" },
-    username: { type: "string" },
-    email: { type: "string", format: "email" },
-    password: { type: "string" },
+    name: { type: "string", minLength: 1 },
+    username: { type: "string", minLength: 1 },
+    email: { type: "string", format: "email", minLength: 1 },
+    password: { type: "string", minLength: 1 },
     photo: { type: "string" },
   },
   required: ["name", "username", "email", "password"],
@@ -20,6 +20,9 @@ const registerUserDto = {
     required: "Invalid data",
     additionalProperties: "Invalid data",
     properties: {
+      name: "Invalid data",
+      username: "Invalid data",
+      password: "Invalid data",
       email: "You have entered invalid email address",
     },
   },
@@ -28,8 +31,8 @@ const registerUserDto = {
 const loginUserDto = {
   type: "object",
   properties: {
-    username: { type: "string" },
-    password: { type: "string" },
+    username: { type: "string", minLength: 1 },
+    password: { type: "string", minLength: 1 },
   },
   required: ["username", "password"],
   additionalProperties: false,
@@ -37,6 +40,10 @@ const loginUserDto = {
     additionalProperties: "Invalid data",
     type: "should be an object",
     required: "Invalid data",
+    properties: {
+      username: "Invalid data",
+      password: "Invalid data",
+    },
   },
 };
 

@@ -62,9 +62,10 @@ class App {
         console.log(`== Prisma Connected to Database ==`);
         console.log(`==================================`);
       })
-      .catch(() => {
+      .catch((err) => {
         console.log(`Error Connecting Prisma to Database`);
         console.log(`===================================`);
+        console.log(err);
       });
   }
 }

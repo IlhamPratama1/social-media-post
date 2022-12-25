@@ -11,7 +11,7 @@ class PostService {
   }
 
   async getPostList(query) {
-    const { searchBy, search, page = 1, limit = 3 } = query;
+    const { searchBy, search, page = 1, limit = 8 } = query;
     let queryData = new Object();
 
     if (!isUndefined(searchBy) && !isUndefined(search)) {
@@ -44,7 +44,7 @@ class PostService {
   }
 
   async getUserPostList(query, userId) {
-    const { searchBy, search, page = 1, limit = 3 } = query;
+    const { searchBy, search, page = 1, limit = 8 } = query;
     let queryData = new Object({ userId: { equals: Number(userId) } });
 
     if (!isUndefined(searchBy) && !isUndefined(search)) {

@@ -36,9 +36,9 @@ class UserService {
     if (!findUser) throw new HttpException(400, "Data not found");
 
     const isPasswordMatching = await compare(userData.oldPassword, findUser.password);
-    if (!isPasswordMatching) throw new HttpException(401, "Password not found");
+    if (!isPasswordMatching) throw new HttpException(400, "Password not found");
 
-    if (userData.newPassword !== userData.confirmNewPassword) throw new HttpException(401, "Password not match");
+    if (userData.newPassword !== userData.confirmNewPassword) throw new HttpException(400, "Password not match");
 
     const hashedPassword = await hash(userData.newPassword, 10);
     const user = await this.users.update({ where: { id: userId }, data: { password: hashedPassword } });

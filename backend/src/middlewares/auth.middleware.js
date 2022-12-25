@@ -21,7 +21,7 @@ const authMiddleware = async (req, res, next) => {
         next(new HttpException(401, "Invalid token"));
       }
     } else {
-      next(new HttpException(404, "No auth token"));
+      next(new HttpException(401, "No auth token"));
     }
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {

@@ -12,6 +12,7 @@ class HomeRoute {
   initializeRoutes() {
     this.router.get("/", this.indexController.index);
     this.router.post("/file", authMiddleware, this.indexController.uploadImage);
+    this.router.post("/file/register", this.indexController.uploadImage);
   }
 }
 
