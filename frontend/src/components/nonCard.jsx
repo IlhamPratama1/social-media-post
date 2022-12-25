@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import axiosInstance from '../lib/axios';
 import { AppContext } from '../lib/context';
 
-export default function Card({ data, detailModal, editModal, confirmModal, fetchPostData }) {
+export default function NonCard({ data, detailModal, fetchPostData }) {
   const { openSnackbar } = useContext(AppContext);
   const isLiked = data.userLiked.length > 0;
 
@@ -57,25 +57,6 @@ export default function Card({ data, detailModal, editModal, confirmModal, fetch
           </button>
           <h1 className='text-base font-quick text-slate-500'>{data.likes}</h1>
         </div>
-        <div className='flex space-x-1'>
-          <button
-            onClick={() => confirmModal({ isOpen: true, data: data })}
-            className='px-3 py-1 font-quick text-xs bg-slate-100 text-purple-s rounded-md font-semibold'
-          >
-            Delete
-          </button>
-          <button
-            onClick={() =>
-              editModal({
-                isOpen: true,
-                data: data,
-              })
-            }
-            className='px-3 py-1 font-quick text-xs bg-purple-s text-white rounded-md font-semibold'
-          >
-            Edit
-          </button>
-        </div>
       </div>
       <div className='flex items-center space-x-2'>
         {data.user.photo === '' ? (
@@ -97,7 +78,7 @@ export default function Card({ data, detailModal, editModal, confirmModal, fetch
   );
 }
 
-Card.propTypes = {
+NonCard.propTypes = {
   data: PropTypes.object,
   detailModal: PropTypes.func,
   editModal: PropTypes.func,

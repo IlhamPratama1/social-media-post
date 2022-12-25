@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { HandRaisedIcon } from '@heroicons/react/24/outline';
+import { CameraIcon } from '@heroicons/react/24/outline';
 import {
   HomeIcon,
   UserIcon,
@@ -58,7 +58,7 @@ export default function DashboardRoot() {
           <div className='space-y-4'>
             <div className='flex items-center space-x-3'>
               <div className='p-2 bg-purple-m rounded-lg'>
-                <HandRaisedIcon className='w-5 h-5 text-white-m' />
+                <CameraIcon className='w-5 h-5 text-white-m' />
               </div>
               <h1 className='font-quick font-semibold text-xl'>Social Media</h1>
             </div>
@@ -71,8 +71,8 @@ export default function DashboardRoot() {
               </Link>
             ) : (
               <Link to={homeRoute} className={btnSecStyle}>
-                <HomeIcon className='w-5 h-5 text-slate-600 group-hover:text-purple-m' />
-                <h1 className='font-medium text-slate-700 group-hover:text-purple-m'>Home</h1>
+                <HomeIcon className='w-5 h-5 group-hover:text-purple-m' />
+                <h1 className='font-medium group-hover:text-purple-m'>Home</h1>
               </Link>
             )}
             {pathname === userRoute ? (

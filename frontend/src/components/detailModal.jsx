@@ -1,8 +1,34 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { HeartIcon } from '@heroicons/react/24/outline';
+import { HeartIcon } from '@heroicons/react/24/solid';
+import { AppContext } from '../lib/context';
+import axiosInstance from '../lib/axios';
 
 export default function DetailModal({ detailModal, data }) {
+  const { openSnackbar } = useContext(AppContext);
+  const [isLiked, setIsLiked] = useState(data.userLiked.length > 0);
+
+  async function LikePost() {
+    try {
+      const url = isLiked ? `post/unlike/${data.id}` : `post/like/${data.id}`;
+      const res = await axiosInstance.put(url);
+      if (res.status == 200) {
+        openSnackbar({
+          isOpen: true,
+          isSuccess: true,
+          message: res.data.message,
+        });
+        setIsLiked(!isLiked);
+      }
+    } catch (err) {
+      openSnackbar({
+        isOpen: true,
+        isSuccess: false,
+        message: err.response.data.message,
+      });
+    }
+  }
+
   return (
     <div className='absolute'>
       <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
@@ -11,11 +37,17 @@ export default function DetailModal({ detailModal, data }) {
             <div className='relative p-6 flex-auto space-y-4'>
               <img
                 src={data.image}
-                className='rounded-xl w-full h-[40rem] object-cover object-top'
+                className='rounded-xl w-full h-[32rem] max-h-[32rem] object-cover object-top'
                 crossOrigin='anonymous'
               />
               <div className='flex space-x-2'>
-                <HeartIcon className='text-slate-500 w-6 h-6' />
+                <button onClick={() => LikePost()}>
+                  {isLiked == true ? (
+                    <HeartIcon className='text-red-500 w-6 h-6' />
+                  ) : (
+                    <HeartIcon className='text-slate-500 w-6 h-6' />
+                  )}
+                </button>
                 <h1 className='text-base font-quick text-slate-500'>{data.likes}</h1>
               </div>
               <div className='flex items-center space-x-2'>

@@ -47,7 +47,7 @@ class PostService {
       limit: Number(limit),
       totalPage: Math.ceil(findPost.length / Number(limit)),
       hasNextPage: Number(page) < Math.ceil(findPost.length / Number(limit)),
-      hasPreviousPage: Number(page) > Math.ceil(findPost.length / Number(limit)),
+      hasPreviousPage: Number(page) > 1,
     };
     const start = (Number(page) - 1) * Number(limit);
     const end = start + Number(limit);
@@ -96,7 +96,7 @@ class PostService {
       limit: Number(limit),
       totalPage: Math.ceil(findPost.length / Number(limit)),
       hasNextPage: Number(page) < Math.ceil(findPost.length / Number(limit)),
-      hasPreviousPage: Number(page) > Math.ceil(findPost.length / Number(limit)),
+      hasPreviousPage: Number(page) > 1,
     };
     const start = (Number(page) - 1) * Number(limit);
     const end = start + Number(limit);
