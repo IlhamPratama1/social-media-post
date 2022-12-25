@@ -10,7 +10,7 @@ class PostService {
     this.userLikes = prisma.userLiked;
   }
 
-  async getPostList(query) {
+  async getPostList(query, userId) {
     const { searchBy, search, page = 1, limit = 8 } = query;
     let queryData = new Object();
 
@@ -26,18 +26,35 @@ class PostService {
       }
     }
 
-    const findPost = await this.posts.findMany({ where: queryData, include: { user: true } });
+    const findPost = await this.posts.findMany({
+      where: queryData,
+      select: {
+        id: true,
+        caption: true,
+        tags: true,
+        image: true,
+        likes: true,
+        user: true,
+        userLiked: {
+          where: { userId: Number(userId) },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
     const pagination = {
       total: findPost.length,
       page: Number(page),
       limit: Number(limit),
+      totalPage: Math.ceil(findPost.length / Number(limit)),
+      hasNextPage: Number(page) < Math.ceil(findPost.length / Number(limit)),
+      hasPreviousPage: Number(page) > Math.ceil(findPost.length / Number(limit)),
     };
     const start = (Number(page) - 1) * Number(limit);
     const end = start + Number(limit);
     const data = findPost.slice(start, end);
 
     const post = data.map((obj) => {
-      return { ...excludeAll(["userId"], obj), user: excludeAll(["id", "password"], obj.user) };
+      return { ...obj, user: excludeAll(["id", "password"], obj.user) };
     });
 
     return { post, pagination };
@@ -58,19 +75,35 @@ class PostService {
         };
       }
     }
-
-    const findPost = await this.posts.findMany({ where: queryData, include: { user: true } });
+    const findPost = await this.posts.findMany({
+      where: queryData,
+      select: {
+        id: true,
+        caption: true,
+        tags: true,
+        image: true,
+        likes: true,
+        user: true,
+        userLiked: {
+          where: { userId: Number(userId) },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
     const pagination = {
       total: findPost.length,
       page: Number(page),
       limit: Number(limit),
+      totalPage: Math.ceil(findPost.length / Number(limit)),
+      hasNextPage: Number(page) < Math.ceil(findPost.length / Number(limit)),
+      hasPreviousPage: Number(page) > Math.ceil(findPost.length / Number(limit)),
     };
     const start = (Number(page) - 1) * Number(limit);
     const end = start + Number(limit);
     const data = findPost.slice(start, end);
 
     const post = data.map((obj) => {
-      return { ...excludeAll(["userId"], obj), user: excludeAll(["id", "password"], obj.user) };
+      return { ...obj, user: excludeAll(["id", "password"], obj.user) };
     });
 
     return { post, pagination };

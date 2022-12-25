@@ -7,7 +7,7 @@ class PostController {
 
   getPostList = async (req, res, next) => {
     try {
-      const { post, pagination } = await this.postService.getPostList(req.query);
+      const { post, pagination } = await this.postService.getPostList(req.query, req.user.id);
       return res.status(201).json({
         success: true,
         message: "Successfully Get Post",

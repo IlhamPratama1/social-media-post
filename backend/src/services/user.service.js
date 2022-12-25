@@ -12,7 +12,7 @@ class UserService {
   async getUserById(userId) {
     const findUser = await this.users.findUnique({ where: { id: userId } });
     if (!findUser) throw new HttpException(400, "Data not found");
-    const user = excludeAll(["id", "password"], findUser);
+    const user = excludeAll(["password"], findUser);
     return user;
   }
 
