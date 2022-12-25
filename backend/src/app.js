@@ -5,18 +5,22 @@ const cors = require("cors");
 const morgan = require("morgan");
 const path = require("path");
 const prisma = require("./lib/prisma");
+const ErrorHandler = require("./exception/ErrorHandler");
 
 // Config
 const { PORT, ORIGIN, CREDENTIALS } = require("./config/index");
 
 // Route
 const HomeRoute = require("./routes/index.routes");
+const AuthRoute = require("./routes/auth.routes");
+const UserRoute = require("./routes/user.routes");
+const PostRoute = require("./routes/post.routes");
 
 class App {
   constructor() {
     this.app = express();
     this.port = PORT || 3000;
-    this.routes = [new HomeRoute()];
+    this.routes = [new HomeRoute(), new AuthRoute(), new UserRoute(), new PostRoute()];
 
     this.initializeMiddlewares();
     this.initializeRoutes();
@@ -27,7 +31,6 @@ class App {
     try {
       this.app.listen(this.port, () => {
         console.log(`=================================`);
-        console.log(`======= ENV: ${this.env} =======`);
         console.log(`🚀 App listening on the port ${this.port}`);
         console.log(`=================================`);
       });
@@ -40,6 +43,7 @@ class App {
     this.routes.forEach((route) => {
       this.app.use("/", route.router);
     });
+    this.app.use(ErrorHandler);
   }
 
   initializeMiddlewares() {
@@ -58,9 +62,10 @@ class App {
         console.log(`== Prisma Connected to Database ==`);
         console.log(`==================================`);
       })
-      .catch(() => {
+      .catch((err) => {
         console.log(`Error Connecting Prisma to Database`);
         console.log(`===================================`);
+        console.log(err);
       });
   }
 }
