@@ -2,6 +2,9 @@
 
 Social Media Post Website
 
+<img src="image/1.PNG" width="48.5%"><img src="image/3.PNG" width="48.5%">
+<img src="image/4.PNG" width="48.5%"><img src="image/2.PNG" width="48.5%">
+
 ### Stack
 
 #### Backend
